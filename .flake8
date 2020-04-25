@@ -1,0 +1,24 @@
+[flake8]
+ignore = D203
+exclude =
+    # git directory
+    .git,
+    # virtual environment
+    env/ ,
+    # manage.py
+    manage.py ,
+    # migrations
+    ./rental/apps/*/migrations/*,
+    # settings file
+    ./rental/settings.py ,
+    # cache directories
+    __pycache__,
+    # conf file 
+    docs/source/conf.py,
+    # old directory contains Flake8 2.0
+    old,
+    # built documentation
+    build,
+    # builds of flake8 that we don't want to check
+    dist
+max-complexity = 10
