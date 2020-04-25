@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'users',
-    'property',
+    'rental.apps.users',
+    'rental.apps.property',
 ]
 
 MIDDLEWARE = [
