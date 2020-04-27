@@ -98,6 +98,9 @@ venv/
 rvenv/
 ENV/
 
+# flake8
+.flake8
+
 # VSCode
 .vscode/*
 *.code-workspace
