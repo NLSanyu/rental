@@ -75,6 +75,9 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'rental.apps.core.exceptions.core_exception_handler',
     'NON_FIELD_ERRORS_KEY': 'error',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rental.apps.users.backends.JWTAuthentication',
+    ),
 }
 
 WSGI_APPLICATION = 'rental.wsgi.application'
