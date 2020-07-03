@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile
+from rental.apps.profiles.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
