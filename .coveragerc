@@ -1,0 +1,3 @@
+[run]
+include = */rental/*
+omit = *migrations*, *tests* , *templates*, *rvenv*

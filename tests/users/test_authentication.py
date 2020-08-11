@@ -16,9 +16,9 @@ class Authentication(APITestCase):
         response = self.client.post('/api/auth/register', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_login(self):
+    def test_login_with_valid_credentials(self):
         """
-        Test logging into a user account
+        Test logging into a registered user account
         """
         registration_data = {
                 "user": {
@@ -34,3 +34,17 @@ class Authentication(APITestCase):
                 }
         login_response = self.client.post('/api/auth/login', login_data, format='json')
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
+
+    def test_login_with_invalid_credentials(self):
+        """
+        Test logging into a user account with credentials
+        that do not exist (not registered)
+        """
+        login_data = {
+                "user": {
+                    "email": "lydia@gmail.com",
+                    "password": "1yd1an5anyu"}
+                }
+        login_response = self.client.post('/api/auth/login', login_data, format='json')
+        self.assertEqual(login_response.status_code, status.HTTP_400_BAD_REQUEST)
+
