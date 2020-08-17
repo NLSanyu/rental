@@ -3,12 +3,17 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateAPIView
+from django.conf import settings
+from ..models import User
+import jwt
+
 
 
 from .serializers import (
     LoginSerializer, RegistrationSerializer, UserSerializer,
 )
 from .renderers import UserJSONRenderer
+from rental.apps.core import utils
 
 
 class RegistrationAPIView(APIView):
@@ -22,7 +27,8 @@ class RegistrationAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(utils.send_mail_user(request, serializer), 
+            status=status.HTTP_201_CREATED)
 
 
 class LoginAPIView(APIView):
@@ -37,6 +43,14 @@ class LoginAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class VerifyAccountView(APIView):
+    def get(self, request):
+        token = request.query_params.get('token')
+        payload = jwt.decode(token, settings.SECRET_KEY)
+        email = payload['email']
+        user = User.objects.filter(email=email)
+        user.update(is_active=True)
+        return True #to be changed to link to front end app
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
